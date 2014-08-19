@@ -1,0 +1,17 @@
+div.row
+  - var obj = posts
+    each val, index in obj
+      div.span4
+        each val1, index1 in val
+          - if (index1 == 'user')
+            - var postUser = val1
+          - if (index1 == 'post')
+            - var postContent = val1
+          - if (index1 == 'time')
+            - var postTime = val1
+            
+              h2
+                a(href='/u/'+postUser)=postUser 
+                      !='说'
+              p!='<small>' + postTime + '</small>'
+              p=postContent
