@@ -1,0 +1,13 @@
+extends layout
+
+block content
+   - if (!user)
+     div.hero-unit
+       h1 Welcome to Microblog
+       p Microblog是一个基于Node.js的微博系统。
+       p
+         a(class='btn btn-primary btn-large' href='/login') 登录
+         a(class='btn btn-large' href='/reg') 注册
+   - else
+     include ./say.jade
+   include ./posts.jade
