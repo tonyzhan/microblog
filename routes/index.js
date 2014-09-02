@@ -11,8 +11,8 @@ router.get('/', function(req, res) {
 	if (err) {
 		posts = [];
 	}
-	res.render('carousel', {
-		title: 'Carousel',
+	res.render('index', {
+		title: 'microblog',
 		posts: posts,
 		user : req.session.user,
             success : req.flash('success').toString(),
