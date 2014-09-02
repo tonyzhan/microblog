@@ -1,4 +1,0 @@
-#! /bin/bash
-# chkconfig: 35 80 70
-iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
-echo "Port 80 is bound with 8080 !"

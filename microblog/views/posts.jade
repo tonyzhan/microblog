@@ -1,9 +1,0 @@
-- for (var i = 3; i < posts.length+3; i = i + 3)
-  div.row
-    - for(var j = i-3; j < i && j < posts.length; j++)
-      div.col-md-4
-        h2
-          a(href='/u/'+posts[j].user)=posts[j].user 
-              !='说'
-        p!='<small>' + posts[j].time + '</small>'
-        p=posts[j].post

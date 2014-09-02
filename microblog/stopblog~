@@ -1,2 +1,0 @@
-#! /bin/sh
-kill -SIGKILL $(ps aux | grep 'cluster.js' | grep -v 'grep' | awk '{print $2}')

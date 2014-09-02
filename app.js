@@ -1,3 +1,6 @@
+var fs = require('fs');
+var accessLogfile = fs.createWriteStream('access.log', {flags: 'a'});
+var errorLogfile = fs.createWriteStream('error.log', {flags: 'a'});
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
@@ -16,24 +19,25 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-//app.use(partials());
 
 app.use(favicon());
-app.use(logger('dev'));
+//app.use(logger('dev'));
+app.use(logger({stream: accessLogfile}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-//cookie middleware
+
+//cookie解析的中间件
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
-//session support
+//提供session支持
 app.use(session({
-    secret: settings.cookieSecret,
-    store: new MongoStore({
-        db: settings.db,
-    })
+  secret: settings.cookieSecret,
+  store: new MongoStore({
+      db: settings.db,
+  })
 }));
 
 
@@ -51,6 +55,11 @@ app.use(function(req, res, next){
 
 
 app.use('/', routes);
+if (!module.parent) {
+  app.listen(8080);
+  //console.log("Express服务器启动, 开始监听 %d 端口, 以 %s 模式运行.", app.address().port, app.settings.env);
+}
+
 app.use('/users', users);
 
 
@@ -67,6 +76,9 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
+        var meta = '[' + new Date() + ']' +req.url + '\n';
+        errorLogfile.write(meta +err.stack + '\n');
+        next();
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -78,6 +90,9 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+    var meta = '[' + new Date() + ']' +req.url + '\n';
+    errorLogfile.write(meta +err.stack + '\n');
+    next();
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
