@@ -1,0 +1,43 @@
+//Fixed navbar
+div.navbar.navbar-inverse.navbar-fixed-top
+  div.container
+    div.navbar-header
+      button(type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse')
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a(class='navbar-brand' href='/blog') Microblog
+        
+    div.navbar-collapse.collapse
+      ul.nav.navbar-nav
+        li.active
+          a(href='/blog') Home
+        - if (!user)
+          li
+            a(href='/login') Login
+          li
+            a(href='/reg') Register
+        - else
+          li
+            a(href='/logout') Logout
+        li.dropdown
+          a(href='#' class='dropdown-toggle' data-toggle='dropdown') Dropdown 
+            span.caret
+          ul(class='dropdown-menu' role='menu')
+            li
+              a(href='#') Action
+            li
+              a(href='#') Another action
+            li
+              a(href='#') Something else here
+            li.divider
+            li.dropdown-header Nav header
+            li
+              a(href='#') Separated link
+            li
+              a(href='#') One more separated link
+              
+      ul.nav.navbar-nav.navbar-right
+        li
+          a(href='/') Rd24.com

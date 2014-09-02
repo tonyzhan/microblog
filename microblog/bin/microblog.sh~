@@ -1,0 +1,23 @@
+#! /bin/sh
+NODE_ENV=production
+DAEMON="node cluster.js"
+NAME=Microblog
+DESC=Microblog
+PIDFILE="microblog.pid"
+
+case "$1" in 
+  start)
+    echo "Starting $DESC: "
+      nohup $DAEMON > /mydisk/microblog &
+    echo $! > $PIDFILE
+    echo "$NAME."
+        ;;
+  stop)
+    echo "Stopping $DESC: "
+      pid='cat $PIDFILE'
+    kill $pid
+      rm $PIDFILE
+    echo "$NAME."
+        ;;
+esac
+exit 0
